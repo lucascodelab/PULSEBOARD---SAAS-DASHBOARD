@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+    background: #3f3f46;
+    padding: 48px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    margin: 0 auto 64px auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #f7f7f8;
+    color: #09090b;
+  }
+  .slide.dark { background: #09090b; color: #fafafa; }
+  .pad { padding: 64px 72px 0 72px; }
+  /* ---------- chrome ---------- */
+  .topbar { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-name { font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+  .brand-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; color: #71717a; margin-top: 3px; }
+  .dark .brand-tag { color: #a1a1aa; }
+  .top-right { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; color: #a1a1aa; }
+  .foot {
+    margin-top: auto;
+    padding: 0 72px 44px 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: #a1a1aa;
+  }
+  .dots { display: flex; gap: 7px; }
+  .dots i { width: 22px; height: 4px; border-radius: 99px; background: #d4d4d8; }
+  .dark .dots i { background: #27272a; }
+  .dots i.on { background: #4f46e5; }
+  /* ---------- typography ---------- */
+  .kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.22em; color: #4f46e5;
+    margin-bottom: 22px;
+  }
+  .dark .kicker { color: #a5b4fc; }
+  .kicker::before { content: ""; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
+  h1.title {
+    font-size: 56px; line-height: 1.04; font-weight: 800; letter-spacing: -0.03em;
+    max-width: 880px;
+  }
+  .lede { margin-top: 20px; font-size: 21px; line-height: 1.55; color: #52525b; max-width: 800px; }
+  .dark .lede { color: #a1a1aa; }
+  /* ---------- screenshot frames ---------- */
+  .frame {
+    background: #fff;
+    border: 1px solid #e4e4e7;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -24px rgba(9, 9, 11, 0.18);
+  }
+  .frame img { display: block; width: 100%; }
+  .frame.dark-frame { background: #18181b; border-color: #ffffff1f; box-shadow: 0 24px 70px -20px rgba(79, 70, 229, 0.35); }
+  .cap { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: #71717a; margin: 14px 4px 0 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .chip {
+    font-size: 14px; font-weight: 600; color: #3f3f46;
+    background: #fff; border: 1px solid #e4e4e7; border-radius: 99px; padding: 8px 16px;
+  }
+  .chip.acc { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+  /* ---------- capa ---------- */
+  .hero-kicker {
+    font-size: 14px; font-weight: 700; letter-spacing: 0.3em; color: #a5b4fc;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 26px;
+  }
+  .hero-kicker::before { content: ""; width: 30px; height: 2px; background: currentColor; border-radius: 2px; }
+  .hero-title { font-size: 118px; font-weight: 800; letter-spacing: -0.045em; line-height: 0.98; }
+  .hero-sub { margin-top: 18px; font-size: 33px; font-weight: 500; letter-spacing: -0.01em; color: #d4d4d8; }
+  .hero-shot { margin-top: 44px; border-radius: 22px 22px 0 0; overflow: hidden; border: 1px solid #ffffff22; border-bottom: none; }
+  .hero-shot img { display: block; width: 100%; height: 660px; object-fit: cover; object-position: top; }
+  .glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(700px 380px at 85% 6%, rgba(79, 70, 229, 0.28), transparent 65%),
+      radial-gradient(560px 420px at 8% 100%, rgba(49, 46, 129, 0.35), transparent 60%);
+  }
+  /* ---------- tech ---------- */
+  .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 34px; }
+  .tech {
+    background: #fff; border: 1px solid #e4e4e7; border-radius: 18px; padding: 26px 28px;
+  }
+  .tech b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .tech span { display: block; margin-top: 8px; font-size: 15px; line-height: 1.5; color: #71717a; }
+  .tech .bar { width: 26px; height: 4px; border-radius: 4px; background: #4f46e5; margin-bottom: 14px; }
+  /* ---------- devices ---------- */
+  .devices { display: flex; gap: 18px; margin-top: 32px; align-items: flex-end; }
+  .device { flex: 1; }
+  .device .frame img { object-fit: cover; object-position: top; }
+  .device-label { text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: #52525b; margin-top: 14px; }
+  /* ---------- cta ---------- */
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: #4f46e5; color: #fff; font-size: 22px; font-weight: 700; letter-spacing: 0.01em;
+    border-radius: 18px; padding: 24px 42px; margin-top: 44px;
+    box-shadow: 0 20px 50px -12px rgba(79, 70, 229, 0.55);
+  }
+  .cta-sub { margin-top: 26px; font-size: 19px; color: #a1a1aa; max-width: 640px; line-height: 1.6; }
+  .stat-row { display: flex; gap: 14px; margin-top: 26px; }
+  .stat {
+    flex: 1; background: #fff; border: 1px solid #e4e4e7; border-radius: 16px; padding: 18px 20px;
+  }
+  .stat b { display: block; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .stat span { display: block; margin-top: 4px; font-size: 13px; color: #71717a; }
+</style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1 · CAPA ==================== -->
+<section class="slide dark" id="s1">
+  <div class="glow"></div>
+  <div class="pad" style="position:relative">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="34" height="34" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name" style="color:#fff">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:64px"></div>
+    <div class="hero-kicker">PROJETO DE FRONT-END</div>
+    <div class="hero-title">PULSEBOARD</div>
+    <div class="hero-sub">Dashboard SaaS para Gestão</div>
+    <div class="hero-shot"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/dash-dark-full.png" alt="Dashboard Pulseboard em modo escuro"></div>
+  </div>
+  <div class="foot" style="position:relative"><span>01 / 08</span><span class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 2 · VISÃO GERAL ==================== -->
+<section class="slide" id="s2">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:44px"></div>
+    <div class="kicker">02 · VISÃO GERAL</div>
+    <h1 class="title">UMA VISÃO COMPLETA DO SEU NEGÓCIO.</h1>
+    <p class="lede">Uma interface criada para centralizar informações, acompanhar indicadores e transformar dados em decisões.</p>
+    <div class="frame" style="margin-top:30px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/dash-light-full.png" style="height:640px;object-fit:cover;object-position:top" alt="Visão geral do dashboard Pulseboard"></div>
+  </div>
+  <div class="foot"><span>02 / 08</span><span class="dots"><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 3 · DASHBOARD ==================== -->
+<section class="slide" id="s3">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:40px"></div>
+    <div class="kicker">03 · DASHBOARD</div>
+    <h1 class="title">DASHBOARD PENSADO PARA DECISÕES RÁPIDAS.</h1>
+    <p class="lede">Indicadores importantes organizados em uma hierarquia visual clara para facilitar a leitura.</p>
+    <div class="frame" style="margin-top:26px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-kpis.png" alt="Cartões de indicadores: receita, usuários, conversão e transações"></div>
+    <div class="cap">KPI CARDS · RECEITA R$ 128.450,00 · 8.429 USUÁRIOS · 6,42% CONVERSÃO · 2.846 TRANSAÇÕES</div>
+    <div class="frame" style="margin-top:18px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-charts.png" style="height:330px;object-fit:cover;object-position:top" alt="Gráficos de receita e aquisição"></div>
+    <div class="cap">REVENUE CHART · ACQUISITION CHART · RECENT ACTIVITY · RECENT TRANSACTIONS</div>
+  </div>
+  <div class="foot"><span>03 / 08</span><span class="dots"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 4 · GESTÃO ==================== -->
+<section class="slide" id="s4">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:40px"></div>
+    <div class="kicker">04 · GESTÃO</div>
+    <h1 class="title">DADOS ORGANIZADOS. OPERAÇÃO MAIS CLARA.</h1>
+    <p class="lede">Clientes e transações organizados em interfaces focadas em leitura, busca e acompanhamento.</p>
+    <div class="frame" style="margin-top:26px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-clientes-card.png" style="height:300px;object-fit:cover;object-position:top" alt="Tabela de clientes com pesquisa, filtros e status"></div>
+    <div class="cap">CLIENTES · PESQUISA · FILTROS · STATUS · PAGINAÇÃO</div>
+    <div class="frame" style="margin-top:18px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-transacoes-card.png" style="height:280px;object-fit:cover;object-position:top" alt="Tabela de transações com métodos e status"></div>
+    <div class="cap">TRANSAÇÕES · MÉTODO · VALOR · STATUS</div>
+  </div>
+  <div class="foot"><span>04 / 08</span><span class="dots"><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 5 · ANALYTICS ==================== -->
+<section class="slide" id="s5">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:40px"></div>
+    <div class="kicker">05 · ANALYTICS</div>
+    <h1 class="title">TRANSFORMANDO DADOS EM INSIGHTS.</h1>
+    <p class="lede">Visualizações e indicadores apresentados de forma clara para facilitar a análise do desempenho.</p>
+    <div class="stat-row">
+      <div class="stat"><b>8.429</b><span>usuários ativos</span></div>
+      <div class="stat"><b>6,42%</b><span>conversão trial → pago</span></div>
+      <div class="stat"><b>94,2%</b><span>retenção no período</span></div>
+    </div>
+    <div class="frame" style="margin-top:20px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/analytics-full.png" style="height:560px;object-fit:cover;object-position:top" alt="Página Analytics com gráficos de receita, aquisição e retenção"></div>
+    <div class="cap">RECEITA · AQUISIÇÃO POR CANAL · CONVERSÃO · RETENÇÃO · ATIVIDADE</div>
+  </div>
+  <div class="foot"><span>05 / 08</span><span class="dots"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 6 · EXPERIÊNCIA ==================== -->
+<section class="slide" id="s6">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:40px"></div>
+    <div class="kicker">06 · EXPERIÊNCIA</div>
+    <h1 class="title">UMA INTERFACE QUE SE ADAPTA.</h1>
+    <p class="lede">Responsividade, acessibilidade e consistência visual em diferentes tamanhos de tela.</p>
+    <div class="devices">
+      <div class="device" style="flex:1.55">
+        <div class="frame"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/dash-light-full.png" style="height:520px;object-fit:cover;object-position:top" alt="Dashboard no desktop"></div>
+        <div class="device-label">DESKTOP</div>
+      </div>
+      <div class="device">
+        <div class="frame"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/dash-tablet.png" style="height:520px;object-fit:cover;object-position:top" alt="Dashboard no tablet"></div>
+        <div class="device-label">TABLET</div>
+      </div>
+      <div class="device" style="flex:0.72">
+        <div class="frame"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/dash-mobile.png" style="height:520px;object-fit:cover;object-position:top" alt="Dashboard no mobile com navegação adaptada"></div>
+        <div class="device-label">MOBILE</div>
+      </div>
+    </div>
+    <div class="chips"><span class="chip acc">Light / Dark</span><span class="chip">Sidebar mobile</span><span class="chip">Sem scroll horizontal</span><span class="chip">Toque acessível</span></div>
+  </div>
+  <div class="foot"><span>06 / 08</span><span class="dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 7 · TECNOLOGIA ==================== -->
+<section class="slide" id="s7">
+  <div class="pad">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:40px"></div>
+    <div class="kicker">07 · TECNOLOGIA</div>
+    <h1 class="title">FRONT-END MODERNO.</h1>
+    <p class="lede">Uma interface construída com tecnologias modernas, componentes reutilizáveis e uma arquitetura pensada para manutenção.</p>
+    <div class="tech-grid">
+      <div class="tech"><div class="bar"></div><b>Next.js</b><span>App Router com Server Components por padrão.</span></div>
+      <div class="tech"><div class="bar"></div><b>TypeScript</b><span>Tipagem estrita de ponta a ponta.</span></div>
+      <div class="tech"><div class="bar"></div><b>Tailwind CSS</b><span>Design system consistente e Dark Mode.</span></div>
+      <div class="tech"><div class="bar"></div><b>Framer Motion</b><span>Transições discretas e acessíveis.</span></div>
+      <div class="tech"><div class="bar"></div><b>Recharts</b><span>Visualização de dados responsiva.</span></div>
+      <div class="tech"><div class="bar"></div><b>Lucide React</b><span>Ícones consistentes em toda a interface.</span></div>
+    </div>
+    <div class="frame" style="margin-top:22px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-activity-tx.png" style="height:230px;object-fit:cover;object-position:top" alt="Atividade recente e transações recentes"></div>
+    <div class="cap">COMPONENTES REUTILIZÁVEIS · BUILD E LINT LIMPOS</div>
+  </div>
+  <div class="foot"><span>07 / 08</span><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+<!-- ==================== SLIDE 8 · CTA ==================== -->
+<section class="slide dark" id="s8">
+  <div class="glow"></div>
+  <div class="pad" style="position:relative">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="34" height="34" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4F46E5"/><rect x="10.6" y="8" width="3.4" height="16" rx="1.7" fill="#fff"/><path d="M14 8h4.6a6 6 0 0 1 0 12H14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="18.6" cy="14" r="1.8" fill="#4F46E5"/></svg>
+        <div><div class="brand-name" style="color:#fff">Pulseboard</div><div class="brand-tag">GESTÃO SAAS</div></div>
+      </div>
+      <div class="top-right">PORTFÓLIO · FRONT-END</div>
+    </div>
+    <div style="height:110px"></div>
+    <div class="kicker">08 · CONTATO</div>
+    <h1 class="title" style="color:#fff">UM PRODUTO DIGITAL COMEÇA PELA EXPERIÊNCIA.</h1>
+    <p class="lede" style="color:#a1a1aa;max-width:720px">Interfaces modernas, responsivas e pensadas para transformar ideias em produtos digitais.</p>
+    <div><span class="cta-btn">FALE COMIGO PELO DIRECT
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </span></div>
+    <p class="cta-sub">Desenvolvimento de interfaces e experiências Front-end.</p>
+    <div style="height:70px"></div>
+    <div class="frame dark-frame"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-kpis.png" alt="Indicadores do dashboard"></div>
+    <div class="frame dark-frame" style="margin-top:18px"><img src="file:///C:/Users/LUCAS/AppData/Local/Temp/opencode/shots/crop-charts-dark.png" style="height:230px;object-fit:cover;object-position:top" alt="Gráficos de receita e aquisição em modo escuro"></div>
+  </div>
+  <div class="foot" style="position:relative"><span>08 / 08</span><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span><span>DADOS FICTÍCIOS PARA DEMONSTRAÇÃO</span></div>
+</section>
+
+</body>
+</html>
